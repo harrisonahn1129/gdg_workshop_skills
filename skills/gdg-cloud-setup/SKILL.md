@@ -14,7 +14,11 @@ The person you're helping may never have used Google Cloud or a terminal. Keep t
 Each step follows the same rhythm, because attendees need to stay in control of their own account and money:
 
 1. **Ask**: get the input the step needs (a name, a number, a yes/no).
-2. **Confirm**: repeat back exactly what you're about to do, and wait for a yes. Use a structured question tool (such as AskUserQuestion) for yes/no choices when you have one; otherwise ask in plain text.
+2. **Confirm**: repeat back exactly what you're about to do, and wait for a yes.
+
+**How to ask.** If you have a structured question tool (Claude Code: AskUserQuestion), use it for every question in this flow, including the project name and the billing choice. These tools always add a free-text "Other" option, so the user can still type their own answer. A plain question in chat ends your turn, and to a first-time user that looks like the setup just stopped. They don't realize you're waiting for them.
+
+If you have to ask in plain text (no question tool, or more choices than the tool can show), make the waiting obvious. End your message with a bold line starting with 👉 that says exactly what to type, e.g. **👉 Type your project name and press Enter.** Don't put anything after it.
 3. **Do it**: run the script for the step.
 4. **Summarize**: show a short "✅ Step N done" block with the facts listed for that step below.
 
@@ -35,7 +39,7 @@ Summary: the signed-in Google account, and that the credit has been claimed.
 
 ## Step 1: Create a new Google Cloud project
 
-1. Ask: *"What would you like to name your project?"* (4–30 characters; letters, numbers, spaces, hyphens).
+1. Ask: *"What would you like to name your project?"* (4–30 characters; letters, numbers, spaces, hyphens). With a question tool, offer two or three ready-made names as options (e.g. "GDG Workshop", "My Agent Lab") and let them type their own through "Other".
 2. Run `scripts/suggest_project_id.sh "<name>"`. If `NAME_VALID=no`, explain `NAME_ERROR` and ask again.
 3. Confirm: *"I'll create a project named **<name>** with ID **<PROJECT_ID>**, with no organization. OK?"* The project ID is permanent and is what they'll paste into Antigravity later. If they'd like a different ID (6–30 lowercase letters, digits, hyphens, starting with a letter), use theirs.
 4. Run `scripts/create_project.sh <PROJECT_ID> "<name>"`. It creates the project without an organization or folder and makes it gcloud's active project. If it fails because the ID is taken, suggest a new ID and confirm again.
@@ -57,7 +61,9 @@ Summary:
    ```
    Closed accounts can't be linked. Show them anyway so the list makes sense, but mark them as unusable. Workshop credits usually show up as their own billing account, named like `[2026-10-17] GDP Credit: XXXX-XXXX-XXXX-XXXX`. Point out the newest open one. Older credit accounts show as CLOSED once they expire or run out. You can't see remaining balances from here, so if it's ambiguous, say so rather than guessing.
    If the output is `NONE`, the credit probably wasn't claimed with this account. Go back to Step 0.
-2. Ask: *"Which number do you want to connect to **<PROJECT_ID>**?"* Let them type the number. A choice tool caps how many options it can show, and the list may be longer than that.
+2. Ask: *"Which number do you want to connect to **<PROJECT_ID>**?"* Always show the full numbered list first, so the numbers stay meaningful.
+   - If there are 4 or fewer **open** accounts and you have a question tool, offer them as options labeled with their list number (e.g. "3. [2026-10-17] GDP Credit: 1DBF-…").
+   - Otherwise, ask in plain text and end with **👉 Type the number of the billing account and press Enter.**
 3. Confirm: *"Connect billing account **<name> (<id>)** to project **<PROJECT_ID>**?"*
 4. Run `scripts/link_billing.sh <PROJECT_ID> <BILLING_ACCOUNT_ID>`.
 
