@@ -7,6 +7,7 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 S="$ROOT/skills/gdg-cloud-setup/scripts"
 DOWNLOAD_PAGE="https://antigravity.google/download"
+DEFAULT_PROJECT_NAME="GDG workshop"
 
 if [[ -t 1 ]]; then
   B=$'\e[1m'; DIM=$'\e[2m'; G=$'\e[32m'; Y=$'\e[33m'; R=$'\e[31m'; C=$'\e[36m'; X=$'\e[0m'
@@ -77,7 +78,11 @@ echo "   Google account: $account"
 header "Step 1 · Create a new Google Cloud project"
 
 while true; do
-  read -r -p "What would you like to name your project? " name || exit 1
+  if yes_no "Use the default project name \"$DEFAULT_PROJECT_NAME\"? (n = name it yourself)"; then
+    name="$DEFAULT_PROJECT_NAME"
+  else
+    read -r -p "What would you like to name your project? " name || exit 1
+  fi
   sug="$("$S/suggest_project_id.sh" "$name")"
   if [[ "$(get NAME_VALID "$sug")" != "yes" ]]; then
     fail "$(get NAME_ERROR "$sug")"

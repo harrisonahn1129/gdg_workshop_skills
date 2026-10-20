@@ -25,7 +25,7 @@ bash setup.sh
 
 The script asks you a question at each step and checks with you before changing anything:
 
-- **Project name**: pick anything, like `My Agent Workshop`
+- **Project name**: answer `y` to use the default name `GDG workshop`, or `n` to type your own
 - **Billing account**: type the number of your workshop credit. It usually looks like `[date] GDP Credit: XXXX-…`
 - **Enable APIs**: answer `y`
 

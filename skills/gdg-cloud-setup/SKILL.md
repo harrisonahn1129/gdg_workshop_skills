@@ -39,7 +39,9 @@ Summary: the signed-in Google account, and that the credit has been claimed.
 
 ## Step 1: Create a new Google Cloud project
 
-1. Ask: *"What would you like to name your project?"* (4–30 characters; letters, numbers, spaces, hyphens). With a question tool, offer two or three ready-made names as options (e.g. "GDG Workshop", "My Agent Lab") and let them type their own through "Other".
+1. The default project name is **GDG workshop**, so attendees who don't care about naming can skip ahead. Ask: *"Use the default project name **GDG workshop**, or name it yourself?"* with two options: "Use 'GDG workshop' (Recommended)" and "Name it myself".
+   - Default: use `GDG workshop` and go straight to the next sub-step.
+   - Name it myself: ask *"What would you like to name your project?"* (4–30 characters; letters, numbers, spaces, hyphens), and take their typed answer.
 2. Run `scripts/suggest_project_id.sh "<name>"`. If `NAME_VALID=no`, explain `NAME_ERROR` and ask again.
 3. Confirm: *"I'll create a project named **<name>** with ID **<PROJECT_ID>**, with no organization. OK?"* The project ID is permanent and is what they'll paste into Antigravity later. If they'd like a different ID (6–30 lowercase letters, digits, hyphens, starting with a letter), use theirs.
 4. Run `scripts/create_project.sh <PROJECT_ID> "<name>"`. It creates the project without an organization or folder and makes it gcloud's active project. If it fails because the ID is taken, suggest a new ID and confirm again.
