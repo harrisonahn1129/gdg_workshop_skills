@@ -1,0 +1,6 @@
+{
+  "name": "gdg-workshop",
+  "description": "GDG Brooklyn workshop setup: create a Google Cloud project, link credit billing, enable Agent Platform APIs, and sign in to Antigravity 2.0.",
+  "version": "1.0.0",
+  "author": { "name": "GDG Brooklyn" }
+}

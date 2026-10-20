@@ -1,0 +1,14 @@
+{
+  "name": "gdg-brooklyn",
+  "description": "GDG Brooklyn workshop skills.",
+  "owner": {
+    "name": "GDG Brooklyn"
+  },
+  "plugins": [
+    {
+      "name": "gdg-workshop",
+      "source": "./",
+      "description": "Guided Google Cloud + Antigravity setup for GDG workshop attendees."
+    }
+  ]
+}

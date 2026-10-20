@@ -1,0 +1,26 @@
+# APIs enabled by the "Enable APIs" banner on the Agent Platform page of the Cloud Console.
+# Format: <service id>|<display name as shown in the console>
+# Service IDs verified with `gcloud services list --available` on 2026-10-20.
+agentidentity.googleapis.com|Agent Identity API
+agentregistry.googleapis.com|Agent Registry API
+aiplatform.googleapis.com|Agent Platform API
+apphub.googleapis.com|App Hub API
+apptopology.googleapis.com|App Topology API
+cloudapiregistry.googleapis.com|Cloud API Registry API
+cloudtrace.googleapis.com|Cloud Trace API
+compute.googleapis.com|Compute Engine API
+dataform.googleapis.com|Dataform API
+iam.googleapis.com|Identity and Access Management (IAM) API
+iap.googleapis.com|Cloud Identity-Aware Proxy API
+logging.googleapis.com|Cloud Logging API
+modelarmor.googleapis.com|Model Armor API
+monitoring.googleapis.com|Cloud Monitoring API
+networksecurity.googleapis.com|Network Security API
+networkservices.googleapis.com|Network Services API
+notebooks.googleapis.com|Notebooks API
+observability.googleapis.com|Observability API
+saasservicemgmt.googleapis.com|App Lifecycle Manager API
+securitycenter.googleapis.com|Security Command Center API
+storage-component.googleapis.com|Cloud Storage
+telemetry.googleapis.com|Telemetry API
+texttospeech.googleapis.com|Cloud Text-to-Speech API
