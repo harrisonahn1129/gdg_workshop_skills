@@ -1,77 +1,65 @@
-# GDG Brooklyn workshop skills
+# GDG Brooklyn workshop setup
 
-Get from "I just claimed my Google Cloud credit" to "I'm signed in to Antigravity" in about 10 minutes:
+Everything happens in the room. Bring a laptop and a Gmail account.
 
-1. Create a Google Cloud project (no organization)
-2. Connect the workshop credit's billing account
-3. Enable the 23 Agent Platform APIs (the same set as the console's **Enable APIs** banner)
-4. Install Antigravity 2.0 (on a laptop) and sign in with **Use Business Account → Continue with Google Cloud → Pay As You Go → your project ID**
+**1. Claim your code** with your Gmail.
 
-Every step asks first, confirms, then shows a summary. **Claim your credit first**, with the Gmail you'll use for everything below.
-
-## Option A: Google Cloud Shell (recommended, nothing to install)
+**2. Run the setup in Cloud Shell.** Cloud Shell is a terminal in your browser, so there's nothing to install. Click:
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/harrisonahn1129/gdg_workshop_skills&cloudshell_tutorial=tutorial.md)
 
-Click the button. Cloud Shell opens with this repo and a tutorial panel. Then run:
+then type:
 
 ```bash
 bash setup.sh
 ```
 
-Or, from any Cloud Shell terminal:
+If Cloud Shell asks you to **Authorize**, click **Authorize**. The script creates your project, connects your credit, and turns on the APIs. It ends with a check list. All ✅ means you're done. Any ❌, show the screen to a mentor.
 
-```bash
-git clone https://github.com/harrisonahn1129/gdg_workshop_skills && cd gdg_workshop_skills && bash setup.sh
-```
+**3. Install Antigravity** from https://antigravity.google/download.
 
-Cloud Shell runs in the cloud, so install Antigravity on your laptop yourself from https://antigravity.google/download. The script prints the sign-in steps and your project ID at the end.
+**4. Sign in with your credit:**
 
-## Option B: Your own terminal, no agent
+1. Open Antigravity and click **Sign in**, then **Business account**.
+2. Click **Continue with Google Cloud** and pick the same Gmail in the browser.
+3. Choose **Other**, paste your project ID, location **global**.
 
-Needs bash and the [gcloud CLI](https://cloud.google.com/sdk/docs/install) (macOS: `brew install --cask gcloud-cli`).
+## Free plan or credit?
 
-```bash
-git clone https://github.com/harrisonahn1129/gdg_workshop_skills && cd gdg_workshop_skills && bash setup.sh
-```
+| | Free plan | Your workshop credit |
+|---|---|---|
+| How you sign in | **Sign in** with Gmail | **Sign in** → **Business account** → your project ID |
+| Limit | Weekly. When it runs out, the agent stops until next week | Your credit |
+| Today | Don't use it | Build on this |
 
-On a laptop, the script also checks for Antigravity 2.0 and installs the right build for your OS and chip.
+**If the agent stops mid-build, you're probably on the free plan.** Sign out and sign in with Business account.
 
-## Option C: With an AI agent (Claude Code or Gemini CLI)
+For the codelab's Gemini API key, create it in AI Studio and pick this project when it asks.
 
-The same flow is packaged as an agent skill, `gdg-cloud-setup`. After setup, just ask: *"Help me set up my Google Cloud project for the workshop."*
+## With an AI agent instead of the script
 
-### Claude Code
+The same steps are packaged as an agent skill, `gdg-cloud-setup`. Ask: *"Help me set up my Google Cloud project for the workshop."*
 
-| Where | How |
+| Agent | How |
 |---|---|
-| Inside this repo | `cd gdg_workshop_skills && claude`. The skill loads automatically from `.claude/skills/`. |
-| Anywhere (install once) | In Claude Code: `/plugin marketplace add harrisonahn1129/gdg_workshop_skills`, then `/plugin install gdg-workshop@gdg-brooklyn` |
-| In Cloud Shell | Install first with `curl -fsSL https://claude.ai/install.sh \| bash` (needs a Claude account), then use it inside this repo as above. |
+| Antigravity CLI (`agy`) | Inside this repo, run `agy`. It loads the skill from `.agents/skills/`. Install: `curl -fsSL https://antigravity.google/cli/install.sh \| bash` (Windows PowerShell: `irm https://antigravity.google/cli/install.ps1 \| iex`). |
+| Claude Code | Inside this repo, run `claude`. It loads the skill from `.claude/skills/`. Or install it anywhere: `/plugin marketplace add harrisonahn1129/gdg_workshop_skills`, then `/plugin install gdg-workshop@gdg-brooklyn`. |
 
-### Gemini CLI
-
-| Where | How |
-|---|---|
-| Inside this repo | `cd gdg_workshop_skills && gemini`, and choose **Trust folder** when asked. Workspace skills load from `.agents/skills/` only in trusted folders. Check with `/skills list`. |
-| Anywhere (install once) | `gemini skills install https://github.com/harrisonahn1129/gdg_workshop_skills.git --path skills/gdg-cloud-setup` |
-| In Cloud Shell | Gemini CLI is preinstalled. Use it inside this repo as above. |
+Gemini CLI no longer serves free or Google AI Pro/Ultra accounts (since June 18, 2026). Use `agy`.
 
 ## Repo layout
 
 ```
-setup.sh                     guided script, no agent needed (Options A and B)
+setup.sh                     guided script, no agent needed
 tutorial.md                  Cloud Shell side-panel walkthrough
 skills/gdg-cloud-setup/      the skill: SKILL.md, scripts/, references/
 .claude/skills/…  → skills/gdg-cloud-setup   (symlink, for Claude Code)
-.agents/skills/…  → skills/gdg-cloud-setup   (symlink, for Gemini CLI and other Agent Skills tools)
+.agents/skills/…  → skills/gdg-cloud-setup   (symlink, for Antigravity CLI and other Agent Skills tools)
 .claude-plugin/              Claude Code plugin + marketplace manifests
 ```
 
-The skill exists once, in `skills/gdg-cloud-setup/`, and the agent folders are symlinks to it, so there's only one copy to edit. On Windows, `git clone` may turn symlinks into plain text files. Windows users should use the "Anywhere" install commands above.
-
 ## Maintaining
 
-- **API list:** `skills/gdg-cloud-setup/references/agent_platform_apis.txt`. Update it if the console's Enable APIs banner changes.
-- **Antigravity installers:** the scripts read the latest links from https://antigravity.google/download, with a pinned fallback version in `scripts/antigravity.sh` and `scripts/antigravity.ps1`.
-- **Common errors:** `skills/gdg-cloud-setup/references/troubleshooting.md`
+- **APIs:** `skills/gdg-cloud-setup/references/apis.txt`.
+- **Sign-in screen names** come from https://antigravity.google/docs/enterprise. Check them against the current app before each workshop and update `setup.sh`, `tutorial.md`, `SKILL.md` and this file together.
+- **Common errors:** `skills/gdg-cloud-setup/references/troubleshooting.md`.

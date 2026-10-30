@@ -1,6 +1,9 @@
-# APIs enabled by the "Enable APIs" banner on the Agent Platform page of the Cloud Console.
-# Format: <service id>|<display name as shown in the console>
-# Service IDs verified with `gcloud services list --available` on 2026-10-20.
+# APIs setup.sh turns on. Format: <service id>|<display name as shown in the console>
+# The first block is the set the "Enable APIs" banner on the Cloud Console's Agent Platform
+# page turns on (checked 2026-10-20), so the console shows no banner after setup.
+# The second block: discoveryengine + businessaicode are turned on by Gemini Enterprise's
+# AI developer tools for Antigravity's Google Cloud sign-in
+# (https://antigravity.google/docs/enterprise). Checked with `gcloud services list --available` on 2026-10-25.
 agentidentity.googleapis.com|Agent Identity API
 agentregistry.googleapis.com|Agent Registry API
 aiplatform.googleapis.com|Agent Platform API
@@ -24,3 +27,5 @@ securitycenter.googleapis.com|Security Command Center API
 storage-component.googleapis.com|Cloud Storage
 telemetry.googleapis.com|Telemetry API
 texttospeech.googleapis.com|Cloud Text-to-Speech API
+discoveryengine.googleapis.com|Discovery Engine API
+businessaicode.googleapis.com|Business AI Code API

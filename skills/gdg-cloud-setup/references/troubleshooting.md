@@ -5,12 +5,12 @@
 - Project creation errors
 - Billing errors
 - API enabling errors
-- Antigravity install and sign-in
+- Antigravity sign-in
 - Running on Windows (raw gcloud commands)
 
 ## Account and auth problems
 
-**"You do not currently have an active account selected"**: run `gcloud auth login`. A browser opens; pick the Gmail account that claimed the credit.
+**"You do not currently have an active account selected"**: run `gcloud auth login`. A browser opens; pick the Gmail that claimed the code.
 
 **Several Google accounts signed in**: `gcloud auth list` shows them all, and `gcloud config set account <email>` switches the active one.
 
@@ -36,36 +36,31 @@
 
 ## API enabling errors
 
-**"Billing account for project is not found" / "requires billing to be enabled"**: Step 2 didn't complete. Re-check with `gcloud billing projects describe <id>`.
+**"Billing account for project is not found" / "requires billing to be enabled"**: Step 3 didn't complete. Re-check with `gcloud billing projects describe <id>`.
 
-**Timeouts or "operation still in progress"**: re-run `agent_platform_apis.sh enable <id>`. Enabling is idempotent, and already-enabled APIs are skipped.
+**Timeouts or "operation still in progress"**: re-run `enable_apis.sh enable <id>`. Enabling is idempotent.
 
-**One API is permanently unavailable**: Google occasionally renames or retires services. Confirm the current ID with `gcloud services list --available --filter="config.title:'<Display Name>'"` and update `references/agent_platform_apis.txt`.
+**One API is permanently unavailable**: confirm the current ID with `gcloud services list --available --filter="config.title:'<Display Name>'"` and update `references/apis.txt`.
 
-## Antigravity install and sign-in
+## Antigravity sign-in
 
-**macOS "Antigravity can't be opened"**: right-click the app in Applications → Open, then confirm.
+**The agent stops mid-build with a limit message**: they're on the free plan. Sign out, then **Sign in** → **Business account** → **Continue with Google Cloud** → **Other** → project ID, location `global`.
 
-**Only "Antigravity IDE" is installed**: that's a different product. Install the 2.0 app (`antigravity.sh install`); both can live side by side.
+**The project is rejected or not listed**:
+- The Gmail picked in the browser must be the one that owns the project.
+- Run `verify.sh <id>`: billing and the Agent Platform API must both be ✅.
+- Use the project **ID**, not the project name or number.
 
-**Download link 404s**: the scripts read the latest link from https://antigravity.google/download and fall back to a pinned version. If both fail, send the user to that page to download manually.
-
-**Sign-in: billing model screen says the project is invalid or has no access**:
-- Make sure the Gmail chosen in the browser is the one that owns the project.
-- Make sure the Agent Platform API (`aiplatform.googleapis.com`) is enabled and billing is linked.
-- Check for a typo in the project ID: use the project **ID**, not the project name or number.
+**Wrong project or location**: sign out and sign in again; that's the only way to change them.
 
 ## Running on Windows (raw gcloud commands)
 
-The `.sh` scripts need bash (Git Bash or WSL work). In plain PowerShell, run the same gcloud commands directly:
+The setup is meant for Cloud Shell. If someone insists on plain PowerShell with gcloud installed:
 
 | Step | Command |
 |---|---|
 | Who's signed in | `gcloud auth list` |
-| Create project | `gcloud projects create <id> --name="<name>"` then `gcloud config set project <id>` |
+| Create project | `gcloud projects create <id> --name="GDG workshop"` |
 | List billing | `gcloud billing accounts list` |
 | Link billing | `gcloud billing projects link <id> --billing-account=<billing-id>` |
-| Check billing | `gcloud billing projects describe <id>` |
-| Enable APIs | `gcloud services enable <ids from agent_platform_apis.txt, ≤20 per call> --project=<id>` |
-| Show enabled | `gcloud services list --enabled --project=<id>` |
-| Antigravity | `powershell -ExecutionPolicy Bypass -File scripts\antigravity.ps1 check` (or `install` / `open`) |
+| Enable APIs | `gcloud services enable <ids from apis.txt> --project=<id>` |
